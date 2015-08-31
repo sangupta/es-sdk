@@ -5,8 +5,8 @@ ElasticSearch Java Client - strongly typed using Gson
 
 There are two other alternatives to this library.
 
-# Official ElaticSearch Java Client - https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html
-# Jest - https://github.com/searchbox-io/Jest
+* Official ElaticSearch Java Client - https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html
+* Jest - https://github.com/searchbox-io/Jest
 
 The only drawback with both of them was that they provided a lot of flexibility and thus were not very strongly-typed. Like, 
 creating an index was not straightforward.
