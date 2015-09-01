@@ -133,6 +133,7 @@ public enum DateFieldFormat {
 	@SerializedName("year_month_day")
 	YearMonthDay,
 	
+	@SerializedName("date")
 	EpochMillis;
 	
 }

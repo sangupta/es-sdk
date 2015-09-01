@@ -38,5 +38,5 @@ public interface ElasticSearchClient {
 	 *            Google GSON library
 	 */
 	public void indexDocument(String index, String mapping, String documentID, Object document);
-
+	
 }

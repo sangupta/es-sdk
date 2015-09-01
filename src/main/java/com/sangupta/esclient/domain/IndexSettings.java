@@ -2,9 +2,9 @@ package com.sangupta.esclient.domain;
 
 public class IndexSettings {
 	
-	private int numberOfShards;
+	private int numberOfShards = 1;
 	
-	private int numberOfReplicas;
+	private int numberOfReplicas = 1;
 	
 	// Usual accessors follow
 

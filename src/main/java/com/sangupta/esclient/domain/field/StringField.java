@@ -12,9 +12,9 @@ public class StringField extends IndexField {
 	
 	protected String searchAnalyzer;
 
-	protected int ignoreAbove;
+	protected Integer ignoreAbove;
 	
-	protected int positionOffsetGap;
+	protected Integer positionOffsetGap;
 	
 	protected Norms norms;
 	
