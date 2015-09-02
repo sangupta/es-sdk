@@ -1,17 +1,23 @@
 package com.sangupta.esclient.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonElement;
 import com.sangupta.esclient.ElasticSearchClient;
 import com.sangupta.esclient.domain.IndexDetails;
 import com.sangupta.esclient.domain.IndexMapping;
 import com.sangupta.esclient.domain.IndexResult;
 import com.sangupta.esclient.domain.IndexSettings;
 import com.sangupta.esclient.domain.IndexedDocument;
+import com.sangupta.esclient.domain.SearchQuery;
+import com.sangupta.esclient.domain.SearchResults;
 import com.sangupta.esclient.exception.IndexAlreadyExistsException;
+import com.sangupta.esclient.intercept.DocumentIndexInterceptor;
 import com.sangupta.jerry.constants.HttpMimeType;
 import com.sangupta.jerry.exceptions.NotImplementedException;
 import com.sangupta.jerry.http.WebInvoker;
@@ -21,6 +27,12 @@ import com.sangupta.jerry.util.AssertUtils;
 import com.sangupta.jerry.util.GsonUtils;
 import com.sangupta.jerry.util.UriUtils;
 
+/**
+ * An Apache HTTP Client based implementation of the {@link ElasticSearchClient}.
+ * 
+ * @author sangupta
+ *
+ */
 public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	
 	/**
@@ -34,12 +46,26 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	protected final String elasticSearchServer;
 	
 	/**
+	 * Set of {@link DocumentIndexInterceptor}s that are plugged in 
+	 */
+	protected final List<DocumentIndexInterceptor> indexInterceptors = new ArrayList<>();
+	
+	/**
 	 * Default constructor - must pass an elastic search server
 	 * 
 	 * @param elasticSearchServer
 	 */
 	public HttpElasticSearchClientImpl(String elasticSearchServer) {
 		this.elasticSearchServer = elasticSearchServer;
+	}
+	
+	/**
+	 * Add a new {@link DocumentIndexInterceptor}.
+	 * 
+	 * @param interceptor
+	 */
+	public void addDocumentIndexInterceptor(DocumentIndexInterceptor interceptor) {
+		this.indexInterceptors.add(interceptor);
 	}
 	
 	@Override
@@ -198,9 +224,33 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 			throw new IllegalArgumentException("Index name must be lowercase");
 		}
 		
+		if(AssertUtils.isNotEmpty(this.indexInterceptors)) {
+			for(DocumentIndexInterceptor interceptor : this.indexInterceptors) {
+				boolean doNotIndex = interceptor.beforeSerialization(document);
+				if(doNotIndex) {
+					return null;
+				}
+			}
+		}
+		
 		String endPoint = UriUtils.addWebPaths(this.getElasticSearchServer(), index, mapping, documentID);
 		WebRequest request = WebRequest.put(endPoint);
-		String requestBody = GsonUtils.getGson().toJson(document);
+		
+		String requestBody;
+		if(AssertUtils.isEmpty(this.indexInterceptors)) {
+			requestBody = GsonUtils.getGson().toJson(document);
+		} else {
+			JsonElement jsonElement = GsonUtils.getGson().toJsonTree(document);
+			for(DocumentIndexInterceptor interceptor : this.indexInterceptors) {
+				boolean doNotIndex = interceptor.afterSerialization(jsonElement);
+				if(doNotIndex) {
+					return null;
+				}
+			}
+			
+			requestBody = GsonUtils.getGson().toJson(jsonElement);
+		}
+		
 		LOGGER.debug("DocumentIndex request as: {}", requestBody);
 		request.bodyString(requestBody, HttpMimeType.JSON);
 		
@@ -296,6 +346,25 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	@Override
 	public boolean updateDocument(String indexName, String mapping, String documentID, Object document) {
 		throw new NotImplementedException();
+	}
+	
+	@Override
+	public SearchResults search(String indexName, String mapping, SearchQuery query) {
+		String endPoint = UriUtils.addWebPaths(this.getElasticSearchServer(), indexName, mapping, "_search");
+		WebResponse response = WebInvoker.executeSilently(WebRequest.get(endPoint));
+
+		if(response == null) {
+			LOGGER.error("Unable to connect to elastic search server at {}", endPoint);
+			return null;
+		}
+		
+		if(!response.isSuccess()) {
+			LOGGER.warn("Non-success response for get document from elastic search server at {}", endPoint);
+			return null;
+		}
+		
+		String apiResponse = response.getContent();
+		return GsonUtils.getGson().fromJson(apiResponse, SearchResults.class);
 	}
 	
 	// Abstraction methods

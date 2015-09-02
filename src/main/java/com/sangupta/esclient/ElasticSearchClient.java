@@ -7,7 +7,10 @@ import com.sangupta.esclient.domain.IndexMapping;
 import com.sangupta.esclient.domain.IndexResult;
 import com.sangupta.esclient.domain.IndexSettings;
 import com.sangupta.esclient.domain.IndexedDocument;
+import com.sangupta.esclient.domain.SearchQuery;
+import com.sangupta.esclient.domain.SearchResults;
 import com.sangupta.esclient.exception.IndexAlreadyExistsException;
+import com.sangupta.esclient.intercept.DocumentIndexInterceptor;
 
 /**
  * Contract for all clients that are available.
@@ -16,6 +19,10 @@ import com.sangupta.esclient.exception.IndexAlreadyExistsException;
  *
  */
 public interface ElasticSearchClient {
+	
+	// Interceptors
+	
+	public void addDocumentIndexInterceptor(DocumentIndexInterceptor interceptor);
 	
 	// Indices API - https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html
 	
@@ -46,6 +53,8 @@ public interface ElasticSearchClient {
 	public boolean updateDocument(String indexName, String mapping, String documentID, Object document);
 	
 	// Search API - https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html
+	
+	public SearchResults search(String indexName, String mapping, SearchQuery query);
 	
 	// CAT API - https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
 	
