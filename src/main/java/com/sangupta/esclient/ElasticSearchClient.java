@@ -22,7 +22,7 @@ public interface ElasticSearchClient {
 	
 	// Interceptors
 	
-	public void addDocumentIndexInterceptor(DocumentIndexInterceptor interceptor);
+	public void addDocumentIndexInterceptor(DocumentIndexInterceptor<? extends Object> interceptor);
 	
 	// Indices API - https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html
 	

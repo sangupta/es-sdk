@@ -64,7 +64,7 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	 * 
 	 * @param interceptor
 	 */
-	public void addDocumentIndexInterceptor(DocumentIndexInterceptor interceptor) {
+	public void addDocumentIndexInterceptor(DocumentIndexInterceptor<? extends Object> interceptor) {
 		this.indexInterceptors.add(interceptor);
 	}
 	
