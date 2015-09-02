@@ -1,4 +1,4 @@
-package com.sangupta.esclient.vo;
+package com.sangupta.esclient.domain;
 
 import com.google.gson.annotations.SerializedName;
 

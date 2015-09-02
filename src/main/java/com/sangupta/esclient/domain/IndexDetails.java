@@ -1,4 +1,4 @@
-package com.sangupta.esclient.vo;
+package com.sangupta.esclient.domain;
 
 import java.util.Map;
 
