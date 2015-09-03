@@ -1,6 +1,7 @@
 package com.sangupta.esclient.domain;
 
 import com.sangupta.esclient.domain.analysis.CustomAnalyzer;
+import com.sangupta.esclient.domain.analysis.AnalyzerFilter;
 import com.sangupta.esclient.domain.analysis.CharFilter;
 
 public class IndexSettings {
@@ -25,6 +26,14 @@ public class IndexSettings {
 		}
 		
 		this.analysis.addCharFilter(name, charFilter);
+	}
+	
+	public void addAnalyzerFilter(String name, AnalyzerFilter filter) {
+		if(this.analysis == null) {
+			this.analysis = new AnalysisSettings();
+		}
+		
+		this.analysis.addAnalyzerFilter(name, filter);
 	}
 	
 	// Usual accessors follow
