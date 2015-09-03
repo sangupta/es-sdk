@@ -9,7 +9,7 @@ import com.sangupta.esclient.domain.IndexSettings;
 public class IndexDetails {
 	
 	@SerializedName("creation_date")
-	public long creationDate;
+	public Long creationDate;
 
 	@SerializedName("settings")
 	public IndexSettings settings;

@@ -27,6 +27,17 @@ public class StringField extends IndexField {
 		this.index = analysis;
 	}
 	
+	public StringField(String analyzer) {
+		this();
+		this.analyzer = analyzer;
+	}
+	
+	public StringField(String indexAnalyzer, String searchAnalyzer) {
+		this();
+		this.indexAnalyzer = indexAnalyzer;
+		this.searchAnalyzer = searchAnalyzer;
+	}
+	
 	// Usual acessors follow
 
 	/**
