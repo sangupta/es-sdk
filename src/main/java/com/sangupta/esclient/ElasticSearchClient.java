@@ -8,7 +8,7 @@ import com.sangupta.esclient.domain.IndexResult;
 import com.sangupta.esclient.domain.IndexSettings;
 import com.sangupta.esclient.domain.IndexedDocument;
 import com.sangupta.esclient.domain.SearchQuery;
-import com.sangupta.esclient.domain.SearchResults;
+import com.sangupta.esclient.domain.search.results.SearchResults;
 import com.sangupta.esclient.exception.IndexAlreadyExistsException;
 import com.sangupta.esclient.intercept.DocumentIndexInterceptor;
 

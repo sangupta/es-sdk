@@ -19,6 +19,9 @@ public class IndexedDocument {
 	@SerializedName("found")
 	private boolean found;
 	
+	@SerializedName("score")
+	private double score;
+	
 	@SerializedName("_source")
 	private Object source;
 	
