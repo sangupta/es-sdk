@@ -252,7 +252,7 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 		}
 		
 		LOGGER.debug("DocumentIndex request as: {}", requestBody);
-		request.bodyString(requestBody, HttpMimeType.JSON);
+		request.bodyString(requestBody, HttpMimeType.JSON, "UTF-8");
 		
 		WebResponse response = WebInvoker.executeSilently(request);
 		if(response == null) {
