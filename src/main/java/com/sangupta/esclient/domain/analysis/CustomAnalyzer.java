@@ -14,17 +14,25 @@ public class CustomAnalyzer {
 	private final String tokenizer;
 	
 	@SerializedName("char_filter")
-	private final List<String> charFilter = new ArrayList<>();
+	private final List<String> charFilters = new ArrayList<>();
 	
-	public CustomAnalyzer(String tokenizer, String charFilter) {
+	@SerializedName("filter")
+	private final List<String> filters = new ArrayList<>();
+	
+	public CustomAnalyzer(String tokenizer, String charFilter, String filter) {
 		this.tokenizer = tokenizer;
-		this.charFilter.add(charFilter);
+		this.charFilters.add(charFilter);
 	}
 	
-	public CustomAnalyzer(String tokenizer, String[] charFilters) {
+	public CustomAnalyzer(String tokenizer, String[] charFilters, String[] filters) {
 		this.tokenizer = tokenizer;
+		
 		for(String filter : charFilters) {
-			this.charFilter.add(filter);
+			this.charFilters.add(filter);
+		}
+		
+		for(String filter : filters) {
+			this.filters.add(filter);
 		}
 	}
 	
