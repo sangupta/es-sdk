@@ -27,4 +27,13 @@ public class SearchMultiField extends SearchField {
 		this.fields.add(fieldName + "^" + boost);
 	}
 	
+	// Usual accessors follow
+
+	/**
+	 * @return the fields
+	 */
+	public List<String> getFields() {
+		return fields;
+	}
+	
 }

@@ -20,4 +20,5 @@ public class FilteredSearchQuery implements SearchQuery {
 		this(filter);
 		this.filtered.put("query", query);
 	}
+	
 }

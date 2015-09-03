@@ -16,4 +16,13 @@ public class TermsFilter implements SearchFilter {
 		this.terms.put(fieldName, Arrays.asList(values));
 	}
 	
+	// Usual accessors follow
+
+	/**
+	 * @return the terms
+	 */
+	public Map<String, List<String>> getTerms() {
+		return terms;
+	}
+	
 }
