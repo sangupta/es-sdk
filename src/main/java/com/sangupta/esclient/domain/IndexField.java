@@ -35,7 +35,9 @@ public abstract class IndexField {
 	
 	/**
 	 * Default constructor
-	 * @param type
+	 * 
+	 * @param type the {@link FieldType} to use
+	 * 
 	 */
 	protected IndexField(FieldType type) {
 		this.type = type;
@@ -44,7 +46,7 @@ public abstract class IndexField {
 	/**
 	 * Convenience constructor
 	 * 
-	 * @param fieldName
+	 * @param fieldName the name of the field
 	 */
 	public void addCopyTo(String fieldName) {
 		if(this.copyTo == null) {
@@ -57,8 +59,9 @@ public abstract class IndexField {
 	/**
 	 * Add a field alias.
 	 * 
-	 * @param name
-	 * @param details
+	 * @param name the name of the field
+	 * 
+	 * @param details the multi-field details
 	 */
 	public void addFieldAlias(String name, MultiFieldDetail details) {
 		if(this.fields == null) {
@@ -71,9 +74,11 @@ public abstract class IndexField {
 	/**
 	 * Add a field alias.
 	 * 
-	 * @param name
-	 * @param type
-	 * @param index
+	 * @param name the name of the field
+	 * 
+	 * @param type the {@link FieldType} to add
+	 * 
+	 * @param analysis the {@link FieldAnalysis} to use
 	 */
 	public void addAlias(String name, FieldType type, FieldAnalysis analysis) {
 		this.addFieldAlias(name, new MultiFieldDetail(type, analysis));

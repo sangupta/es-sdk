@@ -53,7 +53,7 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	/**
 	 * Default constructor - must pass an elastic search server
 	 * 
-	 * @param elasticSearchServer
+	 * @param elasticSearchServer the URL of the ElasticSearch server to use
 	 */
 	public HttpElasticSearchClientImpl(String elasticSearchServer) {
 		this.elasticSearchServer = elasticSearchServer;
@@ -62,7 +62,7 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	/**
 	 * Add a new {@link DocumentIndexInterceptor}.
 	 * 
-	 * @param interceptor
+	 * @param interceptor the {@link DocumentIndexInterceptor} to add
 	 */
 	public void addDocumentIndexInterceptor(DocumentIndexInterceptor<? extends Object> interceptor) {
 		this.indexInterceptors.add(interceptor);
