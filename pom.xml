@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sangupta</groupId>
 	<artifactId>esclient</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>esclient</name>
@@ -23,7 +22,8 @@
 	    <connection>scm:git:ssh://git@github.com/sangupta/esclient.git</connection>
 	    <developerConnection>scm:git:ssh://git@github.com/sangupta/esclient.git</developerConnection>
 	    <url>https://github.com/sangupta/esclient</url>
-  	</scm>
+  	  <tag>HEAD</tag>
+  </scm>
 	
 	<developers>
 		<developer>

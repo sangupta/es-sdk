@@ -16,6 +16,11 @@ public class SearchResults {
 	@SerializedName("hits")
 	private SearchHits hits;
 	
+	@Override
+	public String toString() {
+		return "[SearchResults: hits=" + this.hits.getTotal() + ", time=" + this.took + "]";
+	}
+	
 	// Usual accessors follow
 
 	/**

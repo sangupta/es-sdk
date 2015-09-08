@@ -351,7 +351,12 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	@Override
 	public SearchResults search(String indexName, String mapping, SearchQuery query) {
 		String endPoint = UriUtils.addWebPaths(this.getElasticSearchServer(), indexName, mapping, "_search");
-		WebResponse response = WebInvoker.executeSilently(WebRequest.get(endPoint));
+		
+		WebRequest request = WebRequest.post(endPoint);
+		String body = "{ \"query\" : " + GsonUtils.getGson().toJson(query) + " }";
+		LOGGER.debug("Using search query string as: {}", body);
+		request.bodyString(body, HttpMimeType.JSON, "UTF-8");
+		WebResponse response = WebInvoker.executeSilently(request);
 
 		if(response == null) {
 			LOGGER.error("Unable to connect to elastic search server at {}", endPoint);
