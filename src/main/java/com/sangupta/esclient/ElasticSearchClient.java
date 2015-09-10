@@ -56,6 +56,8 @@ public interface ElasticSearchClient {
 	
 	public SearchResults search(String indexName, String mapping, SearchQuery query);
 	
+	public SearchResults search(String indexName, String mapping, String queryJson);
+	
 	// CAT API - https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
 	
 }
