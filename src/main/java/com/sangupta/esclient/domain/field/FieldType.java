@@ -25,6 +25,8 @@ public enum FieldType {
 	
 	Boolean,
 	
-	Binary;
+	Binary,
+	
+	Object;
 	
 }
