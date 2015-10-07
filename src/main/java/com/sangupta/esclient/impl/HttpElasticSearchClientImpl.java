@@ -1,8 +1,10 @@
 package com.sangupta.esclient.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +47,12 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	 */
 	protected final String elasticSearchServer;
 	
+	protected final Set<String> interceptorNames = new HashSet<>();
+	
 	/**
 	 * Set of {@link DocumentIndexInterceptor}s that are plugged in 
 	 */
+	@SuppressWarnings("rawtypes")
 	protected final List<DocumentIndexInterceptor> indexInterceptors = new ArrayList<>();
 	
 	/**
@@ -60,12 +65,39 @@ public class HttpElasticSearchClientImpl implements ElasticSearchClient {
 	}
 	
 	/**
+	 * @see com.sangupta.esclient.ElasticSearchClient#hasDocumentIndexInterceptor(java.lang.String)
+	 */
+	@Override
+	public boolean hasDocumentIndexInterceptor(String interceptorName) {
+		if(AssertUtils.isEmpty(interceptorName)) {
+			return false;
+		}
+		
+		return this.interceptorNames.contains(interceptorName);
+	}
+	
+	/**
 	 * Add a new {@link DocumentIndexInterceptor}.
 	 * 
 	 * @param interceptor the {@link DocumentIndexInterceptor} to add
 	 */
-	public void addDocumentIndexInterceptor(DocumentIndexInterceptor<? extends Object> interceptor) {
+	public boolean addDocumentIndexInterceptor(DocumentIndexInterceptor<? extends Object> interceptor) {
+		if(interceptor == null) {
+			throw new IllegalArgumentException("Interceptor to be added cannot be null");
+		}
+		
+		String name = interceptor.getUniqueInterceptorName();
+		if(AssertUtils.isEmpty(name)) {
+			throw new IllegalArgumentException("Interceptor name cannot be empty/null");
+		}
+		
+		boolean nameAdded = this.interceptorNames.add(name);
+		if(!nameAdded) {
+			return false;
+		}
+		
 		this.indexInterceptors.add(interceptor);
+		return true;
 	}
 	
 	@Override
